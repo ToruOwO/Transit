@@ -30,13 +30,6 @@ unordered_map<string, vector<string>> graph; //relation btw stns
 unordered_map<string, vector<string>> stn_line; //match stns and lines
 string start, to; //start and end point
 
-//for bfs
-queue<string> q;
-unordered_set<string> visited;
-unordered_map<string, int> dis;
-unordered_map<string, string> from;
-string curr;
-
 void MakeGraph(vector<vector<string>> metro){
 
 	//constrcut stn_line
@@ -63,6 +56,15 @@ void MakeGraph(vector<vector<string>> metro){
 
 bool bfs(){
 
+	nordered_set<string> visited;
+	unordered_map<string, string> from;
+	unordered_map<string, int> dis;
+	queue<string> q;
+
+	string curr = start;
+	q.push(curr);
+	dis[curr] = 0;
+
 	while(!q.empty()){
 		curr = q.front(); q.pop();
 		visited.insert(curr);
@@ -84,10 +86,6 @@ bool bfs(){
 vector<string> FindPath(){
 
 	vector<string> path;
-	curr = start;
-	
-	q.push(curr);
-	dis[curr] = 0;
 
 	if(!bfs()) path.push_back("No route found T.T");
 
@@ -126,7 +124,7 @@ int main(){
     for(int i = res.size() - 1; i >= 0; i--){
         cout << res[i];
         for(int j = 0; j < stn_line[res[i]].size(); j++){
-            cout << "( " << stn_line[res[i]][j] << " )";
+            cout << "(" << stn_line[res[i]][j] << ")";
         }
         cout << endl;
     }
